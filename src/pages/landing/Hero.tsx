@@ -20,7 +20,7 @@ export default function Hero() {
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(108,99,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(108,99,255,.05) 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
       </div>
 
-      <div className="container" style={{ position: 'relative', zIndex: 1, width: '100%', padding: '80px 24px' }}>
+      <div className="container hero-inner" style={{ position: 'relative', zIndex: 1, width: '100%', padding: '80px 24px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }} className="hero-grid">
           <div>
             {/* 배지 */}
@@ -63,6 +63,10 @@ export default function Hero() {
         @media(max-width:768px){
           .hero-grid { grid-template-columns: 1fr !important; }
           .hero-visual { display: none !important; }
+          .hero-inner { padding: 56px 16px 72px !important; }
+        }
+        @media(max-width:480px){
+          .hero-inner { padding: 48px 14px 64px !important; }
         }
       `}</style>
     </section>

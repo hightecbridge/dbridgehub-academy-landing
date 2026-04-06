@@ -3,20 +3,41 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useModalStore } from '../store/modalStore'
 
+const NAV_ITEMS: [string, string][] = [
+  ['features', '기능'],
+  ['how', '사용방법'],
+  ['pricing', '요금제'],
+  ['testimonials', '후기'],
+  ['contact', '문의'],
+]
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const { open } = useModalStore()
   const { pathname } = useLocation()
 
-  // 법적 페이지에서는 항상 배경 적용
   const isLegalPage = ['/privacy', '/terms', '/refund'].includes(pathname)
+  const navSolid = scrolled || isLegalPage
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [menuOpen])
 
   const scrollTo = (id: string) => {
     setMenuOpen(false)
@@ -27,52 +48,82 @@ export default function Navbar() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const openLogin = () => {
+    setMenuOpen(false)
+    open('login')
+  }
+
+  const openSignup = () => {
+    setMenuOpen(false)
+    open('signup')
+  }
+
   return (
-    <nav style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-      padding: '0 24px', transition: 'all .3s',
-      background: scrolled || isLegalPage ? 'rgba(15,14,42,.95)' : 'transparent',
-      backdropFilter: scrolled || isLegalPage ? 'blur(20px)' : 'none',
-      borderBottom: scrolled || isLegalPage ? '1px solid rgba(108,99,255,.2)' : 'none',
-    }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto', height: 70, display: 'flex', alignItems: 'center', gap: 32 }}>
-        {/* 로고 */}
-        <Link to="/" style={{ fontFamily: 'var(--display)', fontSize: 22, fontWeight: 900, color: '#fff', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: 'linear-gradient(135deg,#8B83FF,#6C63FF)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 16, fontWeight: 900, color: '#fff',
-          }}>H</div>
-          HiAcademy
+    <nav
+      className="site-nav"
+      style={{
+        background: navSolid ? 'rgba(15,14,42,.95)' : 'transparent',
+        backdropFilter: navSolid ? 'blur(20px)' : 'none',
+        borderBottom: navSolid ? '1px solid rgba(108,99,255,.2)' : 'none',
+      }}
+    >
+      <div className="site-nav-inner">
+        <Link to="/" className="site-nav-brand">
+          <span className="site-nav-brand-mark">H</span>
+          <span className="site-nav-brand-text">HiAcademy</span>
         </Link>
 
-        {/* 데스크톱 링크 */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 28, marginLeft: 'auto' }} className="nav-links-desktop">
-          {[['features','기능'],['how','사용방법'],['pricing','요금제'],['testimonials','후기'],['contact','문의']].map(([id, label]) => (
-            <button key={id} onClick={() => scrollTo(id)}
-              style={{ background: 'none', border: 'none', fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,.75)', cursor: 'pointer', transition: 'color .2s' }}
-              onMouseOver={e => (e.currentTarget.style.color = '#fff')}
-              onMouseOut={e => (e.currentTarget.style.color = 'rgba(255,255,255,.75)')}
-            >{label}</button>
+        <div className="site-nav-links-desktop">
+          {NAV_ITEMS.map(([id, label]) => (
+            <button key={id} type="button" onClick={() => scrollTo(id)}>
+              {label}
+            </button>
           ))}
         </div>
 
-        {/* 로그인 / 시작 버튼 */}
-        <button onClick={() => open('login')} style={{
-          marginLeft: 12, padding: '10px 18px', borderRadius: 10,
-          fontSize: 14, fontWeight: 600, background: 'rgba(255,255,255,.12)',
-          color: '#fff', border: '1px solid rgba(255,255,255,.2)', cursor: 'pointer', transition: 'all .2s',
-        }}>로그인</button>
-        <button onClick={() => open('signup')} style={{
-          padding: '10px 22px', borderRadius: 10, fontSize: 14, fontWeight: 700,
-          background: 'var(--acc)', color: '#fff', border: 'none', cursor: 'pointer', transition: 'all .2s',
-        }}>무료 시작하기</button>
+        <div className="site-nav-cta site-nav-cta--desktop">
+          <button type="button" className="site-nav-btn site-nav-btn--ghost" onClick={() => open('login')}>
+            로그인
+          </button>
+          <button type="button" className="site-nav-btn site-nav-btn--primary" onClick={() => open('signup')}>
+            무료 시작하기
+          </button>
+        </div>
+
+        <button
+          type="button"
+          className="site-nav-burger"
+          aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((o) => !o)}
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
       </div>
 
-      <style>{`
-        @media(max-width:768px){ .nav-links-desktop { display: none !important; } }
-      `}</style>
+      <div
+        className={`site-nav-backdrop ${menuOpen ? 'is-visible' : ''}`}
+        aria-hidden
+        onClick={() => setMenuOpen(false)}
+      />
+
+      <div className={`site-nav-mobile ${menuOpen ? 'is-open' : ''}`} id="site-nav-mobile-panel">
+        <div className="site-nav-mobile-list">
+          {NAV_ITEMS.map(([id, label]) => (
+            <button key={id} type="button" onClick={() => scrollTo(id)}>
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="site-nav-mobile-actions">
+          <button type="button" className="site-nav-btn site-nav-btn--ghost" onClick={openLogin}>
+            로그인
+          </button>
+          <button type="button" className="site-nav-btn site-nav-btn--primary" onClick={openSignup}>
+            무료 시작하기
+          </button>
+        </div>
+      </div>
     </nav>
   )
 }
