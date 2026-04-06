@@ -371,6 +371,15 @@ img { max-width: 100%; }
   .site-nav-backdrop.is-visible {
     display: block;
   }
+  .site-nav-inner {
+    min-height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-nav-inner {
+    min-height: 56px;
+  }
 }
 
 @media (min-width: 769px) {

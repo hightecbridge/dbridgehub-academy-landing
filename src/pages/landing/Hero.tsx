@@ -7,11 +7,11 @@ export default function Hero() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <section style={{
+    <section className="hero-section" style={{
       minHeight: '100vh',
       background: 'linear-gradient(160deg,#0F0E2A 0%,#1A1840 40%,#252350 70%,#1A1840 100%)',
       position: 'relative', display: 'flex', alignItems: 'center',
-      overflow: 'hidden', paddingTop: 70,
+      overflow: 'hidden',
     }}>
       {/* 배경 */}
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
@@ -20,7 +20,7 @@ export default function Hero() {
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(108,99,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(108,99,255,.05) 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
       </div>
 
-      <div className="container hero-inner" style={{ position: 'relative', zIndex: 1, width: '100%', padding: '80px 24px' }}>
+      <div className="container hero-inner" style={{ position: 'relative', zIndex: 1, width: '100%', padding: '80px 24px 100px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }} className="hero-grid">
           <div>
             {/* 배지 */}
@@ -60,13 +60,25 @@ export default function Hero() {
       </div>
 
       <style>{`
-        @media(max-width:768px){
+        .hero-section {
+          padding-top: calc(70px + env(safe-area-inset-top, 0px));
+        }
+        @media (max-width: 768px) {
+          .hero-section {
+            align-items: flex-start !important;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding-top: calc(60px + env(safe-area-inset-top, 0px)) !important;
+          }
           .hero-grid { grid-template-columns: 1fr !important; }
           .hero-visual { display: none !important; }
-          .hero-inner { padding: 56px 16px 72px !important; }
+          .hero-inner { padding: 12px 16px 56px !important; }
         }
-        @media(max-width:480px){
-          .hero-inner { padding: 48px 14px 64px !important; }
+        @media (max-width: 480px) {
+          .hero-section {
+            padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+          }
+          .hero-inner { padding: 8px 14px 48px !important; }
         }
       `}</style>
     </section>
