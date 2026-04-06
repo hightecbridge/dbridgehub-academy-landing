@@ -66,19 +66,20 @@ export default function Hero() {
         @media (max-width: 768px) {
           .hero-section {
             align-items: flex-start !important;
-            min-height: 100vh;
-            min-height: 100dvh;
+            min-height: auto !important;
             padding-top: calc(60px + env(safe-area-inset-top, 0px)) !important;
+            padding-bottom: 32px;
           }
           .hero-grid { grid-template-columns: 1fr !important; }
           .hero-visual { display: none !important; }
-          .hero-inner { padding: 12px 16px 56px !important; }
+          .hero-inner { padding: 22px 16px 28px !important; }
         }
         @media (max-width: 480px) {
           .hero-section {
             padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+            padding-bottom: 24px;
           }
-          .hero-inner { padding: 8px 14px 48px !important; }
+          .hero-inner { padding: 20px 14px 24px !important; }
         }
       `}</style>
     </section>
