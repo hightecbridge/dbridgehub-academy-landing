@@ -9,8 +9,10 @@ const INFO = [
   { to: '/refund',  label: '환불정책' },
 ]
 
+const navTopPad = 'calc(70px + env(safe-area-inset-top, 0px) + 20px)'
+
 const s: Record<string, React.CSSProperties> = {
-  wrap:    { maxWidth: 900, margin: '0 auto', padding: '48px 24px 80px' },
+  wrap:    { maxWidth: 900, margin: '0 auto', paddingLeft: 24, paddingRight: 24, paddingBottom: 56, paddingTop: navTopPad },
   header:  { background: 'linear-gradient(135deg,var(--navy),#2D2A6E)', borderRadius: 20, padding: '36px 40px', marginBottom: 36, color: '#fff' },
   tag:     { display: 'inline-block', background: 'rgba(108,99,255,.35)', border: '1px solid rgba(108,99,255,.4)', borderRadius: 999, padding: '5px 14px', fontSize: 12, fontWeight: 700, letterSpacing: 1, color: 'rgba(255,255,255,.85)', marginBottom: 16, textTransform: 'uppercase' as const },
   title:   { fontFamily: 'var(--display)', fontSize: 28, fontWeight: 900, marginBottom: 10 },
@@ -68,9 +70,42 @@ export function P({ children }: { children: React.ReactNode }) {
 export default function LegalLayout({ title, tag, children }: Props) {
   const { pathname } = useLocation()
   return (
-    <div style={{ background: 'var(--g1)', minHeight: '100vh' }}>
-      <div style={s.wrap}>
-        <div style={s.header}>
+    <div className="legal-page-root" style={{ background: 'var(--g1)', minHeight: '100vh' }}>
+      <div style={s.wrap} className="legal-wrap">
+        <nav
+          aria-label="법적 고지 문서"
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 8,
+            marginBottom: 20,
+          }}
+        >
+          {INFO.map(({ to, label }) => {
+            const active = pathname === to
+            return (
+              <Link
+                key={to}
+                to={to}
+                style={{
+                  padding: '10px 16px',
+                  borderRadius: 999,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  transition: 'background .2s, color .2s',
+                  background: active ? 'var(--acc)' : '#fff',
+                  color: active ? '#fff' : 'var(--slate)',
+                  border: active ? '1px solid var(--acc)' : '1px solid var(--bd)',
+                  boxShadow: active ? '0 4px 14px rgba(108,99,255,.25)' : 'none',
+                }}
+              >
+                {label}
+              </Link>
+            )
+          })}
+        </nav>
+        <div style={s.header} id="legal-header">
           <div style={s.tag}>{tag}</div>
           <div style={s.title}>{title}</div>
           <div style={s.meta}>
@@ -86,7 +121,12 @@ export default function LegalLayout({ title, tag, children }: Props) {
           공고일자: 2026년 04월 01일 | <strong>시행일자: 2026년 04월 01일</strong>
         </div>
       </div>
-      <style>{`@media(max-width:600px){ #legal-header { padding: 24px 20px !important; } }`}</style>
+      <style>{`
+        @media (max-width: 600px) {
+          #legal-header { padding: 24px 20px !important; }
+          .legal-wrap { padding-left: 16px !important; padding-right: 16px !important; }
+        }
+      `}</style>
     </div>
   )
 }

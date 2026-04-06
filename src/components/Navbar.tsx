@@ -1,5 +1,5 @@
 // src/components/Navbar.tsx
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useModalStore } from '../store/modalStore'
 
@@ -22,9 +22,14 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
+    onScroll()
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useLayoutEffect(() => {
+    setScrolled(window.scrollY > 50)
+  }, [pathname])
 
   useEffect(() => {
     setMenuOpen(false)
