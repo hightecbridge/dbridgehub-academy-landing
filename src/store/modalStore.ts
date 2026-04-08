@@ -2,7 +2,7 @@
 import { create } from 'zustand'
 
 type ModalTab = 'signup' | 'login'
-type SignupStep = 1 | 2 | 3 | 'done'
+export type SignupStep = 1 | 2 | 'done'
 
 interface ModalState {
   isOpen: boolean

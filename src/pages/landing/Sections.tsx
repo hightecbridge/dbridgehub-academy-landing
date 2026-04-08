@@ -258,7 +258,6 @@ const FAQS = [
 export function FaqSection() {
   const [open, setOpen] = useState<number | null>(null)
   const ref = useFadeUp(); const ref2 = useFadeUp()
-  const { open: openModal } = useModalStore()
   return (
     <section id="faq" style={{ padding: '120px 0' }}>
       <div className="container">
@@ -296,26 +295,48 @@ export function ContactSection() {
   const sf = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm(p => ({ ...p, [key]: e.target.value }))
 
-  const submit = async () => {
-    if (!form.academy || !form.name || !form.phone) return alert('학원명, 성함, 연락처는 필수입니다.')
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (status === 'loading') return
+    const el = e.currentTarget
+    // 제출 시점 DOM/FormData 기준 (한글 IME·상태 클로저 불일치 방지)
+    const fd = new FormData(el)
+    const academy = String(fd.get('signupAcademy') ?? '').trim()
+    const name = String(fd.get('signupName') ?? '').trim()
+    const phone = String(fd.get('signupPhone') ?? '').trim()
+    const count = String(fd.get('signupCount') ?? '').trim()
+    const message = String(fd.get('signupMessage') ?? '').trim()
+    if (!academy || !name || !phone) {
+      alert('학원명, 성함, 연락처를 모두 입력해 주세요.')
+      return
+    }
     setStatus('loading')
     try {
-      await webApi.contact({ academyName: form.academy, name: form.name, phone: form.phone, studentCount: form.count, message: form.msg })
+      await webApi.signupInquiry({
+        academyName: academy,
+        name,
+        phone,
+        studentCount: count || undefined,
+        message: message || undefined,
+        source: 'landing-contact',
+      })
       setStatus('done')
       setForm({ academy: '', name: '', phone: '', count: '', msg: '' })
-    } catch { setStatus('error') }
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
     <section id="contact" style={{ padding: '120px 0', background: 'var(--g1)' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }} className="contact-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'start' }} className="contact-grid">
           <div ref={ref} className="fade-up">
-            <div className="section-label">문의하기</div>
-            <h2 className="section-title">궁금한 점이<br/>있으신가요?</h2>
-            <p className="section-desc" style={{ marginBottom: 32 }}>도입 상담부터 기술 지원까지 전문 팀이 빠르게 답변드립니다.</p>
+            <div className="section-label">가입 문의</div>
+            <h2 className="section-title">도입 상담이<br/>필요하신가요?</h2>
+            <p className="section-desc" style={{ marginBottom: 32 }}>HiAcademy 도입, 요금, 데모 등 원장님께서 남겨 주시는 <strong>가입 문의</strong>만 접수합니다. 빠르게 연락드리겠습니다.</p>
             {[['📞','전화 상담','010-5029-9455','평일 09:00 – 18:00'],['✉️','이메일','apporty@gmail.com','24시간 이내 답변'],['💬','카카오 채널','@디브릿지허브','실시간 채팅 상담']].map(([icon,label,value,sub]) => (
-              <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 20 }}>
+              <div key={String(label)} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 20 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--acc3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>{icon}</div>
                 <div>
                   <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--slate)', textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: 3 }}>{label}</div>
@@ -325,25 +346,42 @@ export function ContactSection() {
               </div>
             ))}
           </div>
-          <div style={{ background: '#fff', borderRadius: 24, padding: 36, boxShadow: '0 8px 32px rgba(108,99,255,.08)', border: '1px solid var(--bd)' }}>
-            <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--navy)', marginBottom: 20 }}>도입 문의 보내기</h3>
-            {status === 'done' && <div className="form-success">✓ 문의가 접수되었습니다. 1영업일 이내에 연락드리겠습니다.</div>}
-            {status === 'error' && <div className="form-error">전송 중 오류가 발생했습니다. 이메일로 직접 문의해주세요.</div>}
+          <form
+            noValidate
+            onSubmit={(e) => void handleSubmit(e)}
+            style={{ background: '#fff', borderRadius: 24, padding: 28, boxShadow: '0 8px 32px rgba(108,99,255,.08)', border: '1px solid var(--bd)' }}
+          >
+            <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--navy)', marginBottom: 8 }}>가입 문의 보내기</h3>
+            <p style={{ fontSize: 13, color: 'var(--slate)', marginBottom: 16 }}>학원명과 연락처를 남겨 주시면 담당자가 연락드립니다.</p>
+            {status === 'done' && <div className="form-success">✓ 가입 문의가 접수되었습니다.</div>}
+            {status === 'error' && <div className="form-error">전송에 실패했습니다. 이메일 또는 전화로 문의해 주세요.</div>}
             <div className="form-row">
-              <div className="form-group"><label className="form-label">학원명 *</label><input className="form-input" placeholder="Hi Academy 학원" value={form.academy} onChange={sf('academy')} /></div>
-              <div className="form-group"><label className="form-label">성함 *</label><input className="form-input" placeholder="홍길동" value={form.name} onChange={sf('name')} /></div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="signup-academy">학원명 *</label>
+                <input id="signup-academy" name="signupAcademy" className="form-input" placeholder="Hi Academy 학원" autoComplete="organization" value={form.academy} onChange={sf('academy')} />
+              </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="signup-name">성함 *</label>
+                <input id="signup-name" name="signupName" className="form-input" placeholder="홍길동" autoComplete="name" value={form.name} onChange={sf('name')} />
+              </div>
             </div>
-            <div className="form-group"><label className="form-label">연락처 *</label><input className="form-input" placeholder="010-0000-0000" value={form.phone} onChange={sf('phone')} /></div>
             <div className="form-group">
-              <label className="form-label">학생 수</label>
-              <select className="form-select" value={form.count} onChange={sf('count')}>
+              <label className="form-label" htmlFor="signup-phone">연락처 *</label>
+              <input id="signup-phone" name="signupPhone" className="form-input" type="tel" inputMode="tel" placeholder="010-0000-0000" autoComplete="tel" value={form.phone} onChange={sf('phone')} />
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="signup-count">학생 수</label>
+              <select id="signup-count" name="signupCount" className="form-select" value={form.count} onChange={sf('count')}>
                 <option value="">선택</option>
-                {['50명 미만','50 – 100명','100 – 200명','200명 이상'].map(v => <option key={v}>{v}</option>)}
+                {['50명 미만','50 – 100명','100 – 200명','200명 이상'].map(v => <option key={v} value={v}>{v}</option>)}
               </select>
             </div>
-            <div className="form-group"><label className="form-label">문의 내용</label><textarea className="form-textarea" placeholder="궁금한 점을 자유롭게 작성해주세요." value={form.msg} onChange={sf('msg')} /></div>
-            <button className="form-submit" onClick={submit} disabled={status === 'loading'}>{status === 'loading' ? '전송 중...' : '문의 보내기'}</button>
-          </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="signup-message">문의 내용</label>
+              <textarea id="signup-message" name="signupMessage" className="form-textarea" placeholder="도입 시기, 문의 사항 등" value={form.msg} onChange={sf('msg')} />
+            </div>
+            <button type="submit" className="form-submit" disabled={status === 'loading'}>{status === 'loading' ? '전송 중...' : '문의 보내기'}</button>
+          </form>
         </div>
       </div>
       <style>{`@media(max-width:768px){ .contact-grid { grid-template-columns: 1fr !important; } }`}</style>
