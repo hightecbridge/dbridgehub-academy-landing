@@ -43,7 +43,7 @@ export function TermsPage() {
             ['연간 요금제','결제일 31일 이후','잔여 월 기준 환불 (사용 월 제외)'],
           ]}
         />
-        <InfoBox>※ 이용약관 위반으로 인한 강제 해지 시 환불이 제한될 수 있습니다. 환불 문의: apporty@gmail.com / 010-5029-9455</InfoBox>
+        <InfoBox>※ 이용약관 위반으로 인한 강제 해지 시 환불이 제한될 수 있습니다. 환불 문의: admin@dbridgehub.com / 010-5029-9455</InfoBox>
       </Sec>
 
       <Sec num="7" title="이용자 의무">
@@ -112,7 +112,7 @@ export function RefundPage() {
         <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--navy)', marginBottom: 20, paddingBottom: 12, borderBottom: '2px solid var(--ok2)' }}>📞 환불 신청 방법</div>
         <P>아래 연락처로 환불을 신청해 주세요. 영업일 기준 1–2일 이내에 확인 후 처리해드립니다.</P>
         <div style={{ background: 'linear-gradient(135deg,var(--acc3),rgba(108,99,255,.05))', borderRadius: 16, padding: '24px 28px', border: '1px solid rgba(108,99,255,.2)' }}>
-          {[['✉️','이메일 (24시간 접수)','apporty@gmail.com'],['📞','전화 (평일 09:00–18:00)','010-5029-9455'],['⏱️','처리 기간','영업일 기준 3–5일 이내']].map(([icon, label, value]) => (
+          {[['✉️','이메일 (24시간 접수)','admin@dbridgehub.com'],['📞','전화 (평일 09:00–18:00)','010-5029-9455'],['⏱️','처리 기간','영업일 기준 3–5일 이내']].map(([icon, label, value]) => (
             <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--acc3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, flexShrink: 0 }}>{icon}</div>
               <div>

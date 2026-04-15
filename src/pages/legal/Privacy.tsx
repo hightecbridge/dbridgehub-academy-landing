@@ -68,7 +68,7 @@ export default function PrivacyPage() {
       <Sec num="6" title="정보주체의 권리·의무 및 행사방법">
         <P>이용자는 언제든지 다음 권리를 행사할 수 있습니다.</P>
         <Ul items={['개인정보 열람 요구','오류 정정 요구','삭제 요구','처리 정지 요구']} />
-        <Hl>권리 행사는 이메일(apporty@gmail.com) 또는 전화(010-5029-9455)로 하실 수 있으며, 회사는 지체 없이 조치합니다.</Hl>
+        <Hl>권리 행사는 이메일(admin@dbridgehub.com) 또는 전화(010-5029-9455)로 하실 수 있으며, 회사는 지체 없이 조치합니다.</Hl>
         <InfoBox>기타 개인정보 침해에 관한 신고·상담은 개인정보보호위원회(privacy.go.kr, 국번없이 182) 또는 한국인터넷진흥원(privacy.kisa.or.kr, 국번없이 118)으로 문의하실 수 있습니다.</InfoBox>
       </Sec>
 
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
           rows={[
             ['성명','장경수'],
             ['직책','개인정보 보호책임자(CPO) / 대표'],
-            ['이메일','apporty@gmail.com'],
+            ['이메일','admin@dbridgehub.com'],
             ['전화','010-5029-9455'],
             ['주소','서울특별시 동대문구 장안벚꽃로5길 19, 103동 2107호'],
           ]}

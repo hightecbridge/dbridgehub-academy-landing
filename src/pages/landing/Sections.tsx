@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useModalStore } from '../../store/modalStore'
 import { webApi } from '../../api/client'
+import { PLANS } from '@shared/pricingPlans'
 
 /* ── 스크롤 애니메이션 훅 ── */
 function useFadeUp() {
@@ -139,11 +140,6 @@ export function HowSection() {
 }
 
 /* ══ PRICING ══════════════════════════════════════ */
-const PLANS = [
-  { id: 'starter',  name: '스타터',  desc: '소규모 학원의 첫 디지털 전환.', priceM: 10000, priceY: 8000, items: ['학생 50명까지','반 3개까지','출석·수납 관리','공지사항','학부모 앱 기본'], nope: ['숙제 관리','카카오 알림톡'] },
-  { id: 'standard', name: '스탠다드', desc: '성장하는 중형 학원을 위한 완전한 솔루션.', priceM: 20000, priceY: 16000, popular: true, items: ['학생 100명까지','반 무제한','출석·수납·숙제 관리','카카오 알림톡 연동','학부모 앱 풀 기능','엑셀 내보내기'], nope: [] },
-  { id: 'premium',  name: '프리미엄', desc: '대형 학원 & 프랜차이즈를 위한 엔터프라이즈.', priceM: 50000, priceY: 40000, items: ['학생 무제한','반 무제한','모든 기능 포함','카카오 알림톡 연동','다중 원장 계정','API 연동 지원'], nope: [] },
-]
 
 export function PricingSection() {
   const [mode, setMode] = useState<'m' | 'y'>('m')
@@ -335,7 +331,7 @@ export function ContactSection() {
             <div className="section-label">가입 문의</div>
             <h2 className="section-title">도입 상담이<br/>필요하신가요?</h2>
             <p className="section-desc" style={{ marginBottom: 32 }}>HiAcademy 도입, 요금, 데모 등 원장님께서 남겨 주시는 <strong>가입 문의</strong>만 접수합니다. 빠르게 연락드리겠습니다.</p>
-            {[['📞','전화 상담','010-5029-9455','평일 09:00 – 18:00'],['✉️','이메일','apporty@gmail.com','24시간 이내 답변'],['💬','카카오 채널','@디브릿지허브','실시간 채팅 상담']].map(([icon,label,value,sub]) => (
+            {[['📞','전화 상담','010-5029-9455','평일 09:00 – 18:00'],['✉️','이메일','admin@dbridgehub.com','24시간 이내 답변'],['💬','카카오 채널','@디브릿지허브','실시간 채팅 상담']].map(([icon,label,value,sub]) => (
               <div key={String(label)} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 20 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--acc3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>{icon}</div>
                 <div>
