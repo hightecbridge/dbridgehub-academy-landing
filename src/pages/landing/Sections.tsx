@@ -164,7 +164,7 @@ export function PricingSection() {
             ))}
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }} className="pricing-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 20 }} className="pricing-grid">
           {PLANS.map(plan => (
             <div key={plan.id} style={{ background: plan.popular ? 'rgba(108,99,255,.15)' : 'rgba(255,255,255,.05)', border: `1px solid ${plan.popular ? 'rgba(108,99,255,.5)' : 'rgba(255,255,255,.1)'}`, borderRadius: 20, padding: 32, position: 'relative', transition: 'all .3s', transform: plan.popular ? 'scale(1.03)' : 'none' }}>
               {plan.popular && <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: 'var(--acc)', color: '#fff', padding: '5px 16px', borderRadius: 999, fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap' }}>🔥 가장 인기</div>}
@@ -197,7 +197,8 @@ export function PricingSection() {
         <p style={{ textAlign: 'center', marginTop: 36, fontSize: 13, color: 'rgba(255,255,255,.35)' }}>💡 모든 플랜은 신용카드 없이 30일 무료 체험 가능 · 체험 종료 후 자동 결제 없음</p>
       </div>
       <style>{`
-        @media(max-width:1024px){ .pricing-grid { grid-template-columns: 1fr !important; max-width: 420px; margin: 0 auto; } }
+        @media(max-width:1200px){ .pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+        @media(max-width:700px){ .pricing-grid { grid-template-columns: 1fr !important; max-width: 420px; margin: 0 auto; } }
       `}</style>
     </section>
   )
