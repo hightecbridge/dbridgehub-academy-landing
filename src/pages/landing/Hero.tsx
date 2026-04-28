@@ -37,11 +37,11 @@ export default function Hero() {
             <p style={{ fontSize: 17, color: 'rgba(255,255,255,.6)', lineHeight: 1.7, marginBottom: 36 }}>
               출석·수납·공지·숙제·학부모 소통까지<br/>
               HiAcademy 하나로 모두 해결하세요.<br/>
-              지금 바로 30일 무료 체험을 시작하세요.
+              월 자동 결제(VAT 포함)로 바로 시작하세요.
             </p>
 
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-              <button className="btn btn-primary btn-lg" onClick={() => open('signup')}>🚀 30일 무료 체험</button>
+              <button className="btn btn-primary btn-lg" onClick={() => open('signup')}>🚀 월 정기결제 등록</button>
               <button className="btn btn-white btn-lg" onClick={() => scrollTo('features')}>기능 살펴보기 →</button>
             </div>
           </div>

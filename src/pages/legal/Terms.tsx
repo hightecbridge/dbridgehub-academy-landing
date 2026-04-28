@@ -22,25 +22,24 @@ export function TermsPage() {
 
       <Sec num="5" title="요금제 및 결제">
         <LTable
-          headers={['요금제','월간 금액','연간 금액 (20% 할인)','주요 제한']}
+          headers={['요금제','월 자동 결제 금액 (VAT 포함)','주요 제한']}
           rows={[
-            ['스타터','10,000원/월','8,000원/월','학생 50명, 반 3개'],
-            ['스탠다드','20,000원/월','16,000원/월','학생 100명, 반 무제한'],
-            ['프리미엄','50,000원/월','40,000원/월','학생·반 무제한'],
+            ['베이직','4,400원/월','학생 50명 이하'],
+            ['스탠다드','8,800원/월','학생 100명 이하'],
+            ['프리미엄','16,500원/월','학생 200명 이하'],
+            ['엔터프라이즈','33,000원/월','학생 500명 이하'],
           ]}
         />
         <Hl>30일 무료 체험 후 이용자가 직접 요금제를 선택·결제해야 서비스가 계속 이용 가능합니다. 자동 결제는 이루어지지 않습니다.</Hl>
-        <Ul items={['결제는 신용카드, 체크카드로 가능합니다.','연간 결제 시 월간 금액 대비 20% 할인이 적용됩니다.','부가가치세(VAT)는 별도입니다.']} />
+        <Ul items={['결제는 신용카드, 체크카드로 가능합니다.','월 자동 결제 금액은 부가가치세(VAT) 포함 금액입니다.']} />
       </Sec>
 
       <Sec num="6" title="환불 정책">
         <LTable
           headers={['구분','환불 시점','환불 금액']}
           rows={[
-            ['월간 요금제','결제일로부터 7일 이내','전액 환불'],
-            ['월간 요금제','결제일 8일 이후','잔여 일수 비례 환불'],
-            ['연간 요금제','결제일로부터 30일 이내','전액 환불'],
-            ['연간 요금제','결제일 31일 이후','잔여 월 기준 환불 (사용 월 제외)'],
+            ['월 요금제','결제일로부터 7일 이내','전액 환불'],
+            ['월 요금제','결제일 8일 이후','잔여 일수 비례 환불'],
           ]}
         />
         <InfoBox>※ 이용약관 위반으로 인한 강제 해지 시 환불이 제한될 수 있습니다. 환불 문의: admin@dbridgehub.com / 010-5029-9455</InfoBox>
@@ -85,7 +84,7 @@ export function RefundPage() {
       </div>
 
       <div style={{ background: '#fff', borderRadius: 16, padding: 32, marginBottom: 16, border: '1px solid var(--bd)' }}>
-        <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--navy)', marginBottom: 20, paddingBottom: 12, borderBottom: '2px solid var(--ok2)' }}>📅 월간 요금제 환불</div>
+        <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--navy)', marginBottom: 20, paddingBottom: 12, borderBottom: '2px solid var(--ok2)' }}>📅 월 요금제 환불</div>
         <LTable
           headers={['환불 시점','환불 금액','비고']}
           rows={[
@@ -93,19 +92,7 @@ export function RefundPage() {
             ['결제일 8일 이후','잔여 일수 비례 환불','일할 계산 후 환불'],
           ]}
         />
-        <P>예시) 30,000원 월간 결제 후 15일 경과 시 → 약 15,000원 환불 (잔여 15일 기준)</P>
-      </div>
-
-      <div style={{ background: '#fff', borderRadius: 16, padding: 32, marginBottom: 16, border: '1px solid var(--bd)' }}>
-        <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--navy)', marginBottom: 20, paddingBottom: 12, borderBottom: '2px solid var(--ok2)' }}>📆 연간 요금제 환불</div>
-        <LTable
-          headers={['환불 시점','환불 금액','비고']}
-          rows={[
-            ['결제일로부터 30일 이내','전액 환불','결제 취소 처리'],
-            ['결제일 31일 이후','잔여 월 기준 환불','사용한 월 제외 후 환불'],
-          ]}
-        />
-        <P>예시) 연간 결제(12개월) 후 3개월 경과 시 → 잔여 9개월치 환불 (사용 3개월 제외)</P>
+        <P>예시) 8,800원 결제 후 15일 경과 시 → 약 4,400원 환불 (잔여 15일 기준)</P>
       </div>
 
       <div style={{ background: '#fff', borderRadius: 16, padding: 32, marginBottom: 16, border: '1px solid var(--bd)' }}>

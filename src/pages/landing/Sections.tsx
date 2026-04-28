@@ -142,7 +142,6 @@ export function HowSection() {
 /* ══ PRICING ══════════════════════════════════════ */
 
 export function PricingSection() {
-  const [mode, setMode] = useState<'m' | 'y'>('m')
   const ref = useFadeUp()
   const { open } = useModalStore()
   const fmt = (n: number) => n.toLocaleString('ko-KR')
@@ -154,14 +153,11 @@ export function PricingSection() {
         <div ref={ref} className="fade-up" style={{ textAlign: 'center' }}>
           <div className="section-label" style={{ color: 'rgba(255,255,255,.6)' }}>요금제</div>
           <h2 className="section-title" style={{ color: '#fff' }}>학원 규모에 맞는<br/>합리적인 요금제</h2>
-          <p className="section-desc" style={{ margin: '0 auto', textAlign: 'center', color: 'rgba(255,255,255,.55)' }}>모든 요금제 30일 무료 체험 · 언제든 플랜 변경 · 약정 없음</p>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, background: 'rgba(255,255,255,.08)', borderRadius: 999, padding: 6, margin: '28px 0 48px' }}>
-            {[['m','월간 결제'],['y','연간 결제']].map(([key, label]) => (
-              <button key={key} onClick={() => setMode(key as 'm'|'y')}
-                style={{ padding: '8px 20px', borderRadius: 999, fontSize: 13, fontWeight: 600, transition: 'all .2s', background: mode === key ? '#fff' : 'transparent', color: mode === key ? 'var(--navy)' : 'rgba(255,255,255,.6)', border: 'none', cursor: 'pointer' }}>
-                {label}{key === 'y' && <span style={{ color: '#F7A600', fontSize: 11, marginLeft: 4 }}>20% 할인</span>}
-              </button>
-            ))}
+          <p className="section-desc" style={{ margin: '0 auto', textAlign: 'center', color: 'rgba(255,255,255,.55)' }}>
+            월 정기결제 전용 · VAT 포함 금액 · 언제든 플랜 변경 가능
+          </p>
+          <div style={{ display: 'inline-flex', alignItems: 'center', background: 'rgba(255,255,255,.08)', borderRadius: 999, padding: '8px 20px', margin: '28px 0 48px', fontSize: 13, fontWeight: 700, color: '#fff' }}>
+            월 자동 결제 (VAT 포함)
           </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 20 }} className="pricing-grid">
@@ -170,9 +166,9 @@ export function PricingSection() {
               {plan.popular && <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: 'var(--acc)', color: '#fff', padding: '5px 16px', borderRadius: 999, fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap' }}>🔥 가장 인기</div>}
               <div style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,.5)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: 1 }}>{plan.name}</div>
               <div style={{ fontFamily: 'var(--display)', fontSize: 44, fontWeight: 800, color: '#fff', lineHeight: 1, marginBottom: 6 }}>
-                {fmt(mode === 'm' ? plan.priceM : plan.priceY)}<span style={{ fontSize: 18, fontWeight: 600, color: 'rgba(255,255,255,.5)' }}>원</span>
+                {fmt(plan.priceM)}<span style={{ fontSize: 18, fontWeight: 600, color: 'rgba(255,255,255,.5)' }}>원</span>
               </div>
-              <div style={{ fontSize: 13, color: 'rgba(255,255,255,.45)', marginBottom: 24 }}>/ 월 · 부가세 별도</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,.45)', marginBottom: 24 }}>/ 월 · VAT 포함</div>
               <div style={{ fontSize: 14, color: 'rgba(255,255,255,.6)', marginBottom: 24, lineHeight: 1.6, minHeight: 44 }}>{plan.desc}</div>
               <div style={{ height: 1, background: 'rgba(255,255,255,.1)', marginBottom: 24 }} />
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 32 }}>
@@ -189,12 +185,12 @@ export function PricingSection() {
               </ul>
               <button onClick={() => open('signup', plan.id)}
                 style={{ width: '100%', padding: 14, borderRadius: 12, fontSize: 15, fontWeight: 700, transition: 'all .2s', cursor: 'pointer', background: plan.popular ? 'var(--acc)' : 'rgba(255,255,255,.08)', color: '#fff', border: plan.popular ? 'none' : '1px solid rgba(255,255,255,.15)', boxShadow: plan.popular ? '0 4px 20px rgba(108,99,255,.4)' : 'none' }}>
-                30일 무료 시작
+                월 정기결제 등록
               </button>
             </div>
           ))}
         </div>
-        <p style={{ textAlign: 'center', marginTop: 36, fontSize: 13, color: 'rgba(255,255,255,.35)' }}>💡 모든 플랜은 신용카드 없이 30일 무료 체험 가능 · 체험 종료 후 자동 결제 없음</p>
+        <p style={{ textAlign: 'center', marginTop: 36, fontSize: 13, color: 'rgba(255,255,255,.35)' }}>💡 모든 플랜은 월 자동 결제(VAT 포함)로 운영됩니다.</p>
       </div>
       <style>{`
         @media(max-width:1200px){ .pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
@@ -248,7 +244,7 @@ const FAQS = [
   ['무료 체험에 카드 등록이 필요한가요?', '아니요, 30일 무료 체험은 신용카드 없이 시작 가능합니다. 체험 종료 후 결제를 원하실 때 카드 정보를 입력하시면 됩니다. 자동 결제는 절대 없습니다.'],
   ['기존 데이터를 가져올 수 있나요?', '엑셀 파일로 학생·학부모 정보를 일괄 업로드할 수 있습니다. 데이터 이전이 어려우시면 고객센터로 문의해 주시면 안내해드립니다.'],
   ['학부모 앱은 별도 비용이 있나요?', '학부모 앱은 모든 요금제에 무료로 포함됩니다. 학부모님들은 App Store / Google Play에서 무료로 다운로드하시면 됩니다.'],
-  ['중도 해지 시 환불이 가능한가요?', '월간 요금제는 언제든 해지 가능하며 잔여 기간 비례 환불됩니다. 연간 요금제는 가입 후 30일 이내 100% 환불, 이후 잔여 월 기준 환불됩니다.'],
+  ['중도 해지 시 환불이 가능한가요?', '월 요금제는 언제든 해지 가능하며 잔여 기간 기준으로 환불됩니다.'],
   ['데이터 보안은 어떻게 관리되나요?', 'AWS 서울 리전에서 운영되며 모든 데이터는 AES-256 암호화로 저장됩니다. 개인정보보호법을 준수하며 일 1회 자동 백업됩니다.'],
   ['태블릿·스마트폰에서도 사용 가능한가요?', '어드민 웹은 PC·태블릿·스마트폰 모두 최적화되어 있습니다. 출석 체크는 태블릿으로 가장 편리하게 사용하실 수 있습니다.'],
 ]
