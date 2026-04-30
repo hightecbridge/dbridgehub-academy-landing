@@ -52,7 +52,7 @@ export default function Footer() {
         {/* 하단 */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,.08)', paddingTop: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
           <div style={{ fontSize: 12 }}>
-            © 2026 HiAcademy. All rights reserved. | 상호: 디브릿지허브 | 대표: 장경수 | 사업자등록번호: 599-26-02056<br/>
+            © 2026 HiAcademy. All rights reserved. | 상호: 디브릿지허브 | 대표: 장경수 | 사업자등록번호: 599-26-02056 | 통신판매업신고번호: 제2026-서울동대문-0901호<br/>
             주소: 서울특별시 동대문구 장안벚꽃로5길 19, 103동 2107호 | 연락처: 010-5029-9455
           </div>
           <div style={{ display: 'flex', gap: 20 }}>
