@@ -23,7 +23,7 @@ const s: Record<string, React.CSSProperties> = {
   sTitle:  { fontSize: 18, fontWeight: 800, color: 'var(--navy)', marginBottom: 16, paddingBottom: 12, borderBottom: '2px solid var(--acc3)' },
   table:   { width: '100%', borderCollapse: 'collapse' as const, fontSize: 13, margin: '12px 0' },
   thStyle: { padding: '10px 12px', background: 'var(--g1)', border: '1px solid var(--bd)', textAlign: 'left' as const, fontWeight: 700, color: 'var(--navy)' },
-  tdStyle: { padding: '10px 12px', border: '1px solid var(--bd)', color: 'var(--slate)' },
+  tdStyle: { padding: '10px 12px', border: '1px solid var(--bd)', color: 'var(--slate)', whiteSpace: 'pre-line' as const },
   hl:      { background: 'var(--acc3)', borderRadius: 12, padding: '14px 18px', fontSize: 13, color: 'var(--acc)', margin: '12px 0', borderLeft: '4px solid var(--acc)' },
   info:    { background: 'var(--g1)', borderRadius: 12, padding: '16px 20px', fontSize: 13, color: 'var(--slate)', margin: '12px 0', border: '1px solid var(--bd)' },
 }
